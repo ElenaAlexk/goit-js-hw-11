@@ -18,13 +18,13 @@ export default class NewsApiService {
       orientation: 'horizontal',
       safesearch: true,
       page: this.page,
-      per_page: 5,
+      per_page: 8,
     });
 
     try {
       const response = await axios.get(`${BASE_URL}?${OPTIONS.toString()}`);
       this.incrementPage();
-      return response.data.hits;
+      return response.data;
     } catch (error) {
       console.error(error.toJSON());
     }

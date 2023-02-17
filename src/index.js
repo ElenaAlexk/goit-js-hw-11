@@ -2,7 +2,7 @@ import { Notify } from 'notiflix';
 
 import { createMarkup } from './app/createMarkup';
 import NewsApiService from './app/PixabayAPI';
-import LoadMoreBtn from './app/loadMoreBtn';
+import LoadMoreBtn from './app/load-more-btn';
 
 const refs = {
   searchForm: document.querySelector('.search-form'),
@@ -25,13 +25,43 @@ function onSearch(e) {
   if (newsApiService.query === '') {
     return Notify.info('Enter data to search!');
   }
+  loadMoreBtn.show();
   newsApiService.resetPage();
   clearGallery();
-  newsApiService.fetchPost().then(addMarkup);
+  fetchPosts();
 }
 
 function onLoadMore() {
-  newsApiService.fetchPost().then(addMarkup);
+  fetchPosts();
+}
+
+function fetchPosts() {
+  loadMoreBtn.hide();
+
+  newsApiService.fetchPost().then(data => {
+    const currentPage = newsApiService.page - 1;
+    newsApiService.hits = data.totalHits;
+
+    if (!data.totalHits) {
+      loadMoreBtn.hide();
+      return Notify.failure(
+        'Sorry, there are no images matching your search query. Please try again.'
+      );
+    }
+    if (!data.hits.length) {
+      loadMoreBtn.hide();
+      return Notify.failure(
+        `We're sorry, but you've reached the end of search results.`
+      );
+    }
+
+    //createMarkup(data.hits);
+    addMarkup(data.hits);
+    loadMoreBtn.show();
+    if (currentPage === 1) {
+      Notify.success(`Hooray! We found ${newsApiService.hits} images.`);
+    }
+  });
 }
 
 function addMarkup(hits) {

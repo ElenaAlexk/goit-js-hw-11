@@ -13,12 +13,12 @@ export default class LoadMoreBtn {
 
   enable() {
     this.refs.button.disable = false;
-    this.refs.button.classList.remove('btn-loading');
+    //this.refs.button.classList.remove('btn-loading');
   }
 
   disable() {
     this.refs.button.disable = true;
-    this.refs.button.classList.add('btn-loading');
+    //this.refs.button.classList.add('btn-loading');
   }
 
   show() {

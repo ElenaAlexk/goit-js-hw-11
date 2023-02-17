@@ -1,5 +1,5 @@
-export function createMarkup(hits) {
-  return hits
+export function createMarkup(photos) {
+  return photos
     .map(
       ({
         tags,
