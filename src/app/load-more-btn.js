@@ -11,7 +11,7 @@ export default class LoadMoreBtn {
     return refs;
   }
 
-  enable() {
+  /*enable() {
     this.refs.button.disable = false;
     //this.refs.button.classList.remove('btn-loading');
   }
@@ -19,7 +19,7 @@ export default class LoadMoreBtn {
   disable() {
     this.refs.button.disable = true;
     //this.refs.button.classList.add('btn-loading');
-  }
+  }*/
 
   show() {
     this.refs.button.classList.remove('is-hidden');

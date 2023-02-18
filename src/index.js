@@ -1,4 +1,6 @@
 import { Notify } from 'notiflix';
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
 
 import { createMarkup } from './app/createMarkup';
 import NewsApiService from './app/PixabayAPI';
@@ -16,6 +18,13 @@ const loadMoreBtn = new LoadMoreBtn({
 
 const newsApiService = new NewsApiService();
 
+const lightbox = new SimpleLightbox('.gallery a', {
+  captionDelay: 250,
+  captionsData: 'alt',
+  captionPosition: 'bottom',
+  enableKeyboard: true,
+});
+
 refs.searchForm.addEventListener('submit', onSearch);
 loadMoreBtn.refs.button.addEventListener('click', onLoadMore);
 
@@ -29,10 +38,12 @@ function onSearch(e) {
   newsApiService.resetPage();
   clearGallery();
   fetchPosts();
+  lightbox.refresh();
 }
 
 function onLoadMore() {
   fetchPosts();
+  //lightbox.refresh();
 }
 
 function fetchPosts() {
@@ -55,12 +66,12 @@ function fetchPosts() {
       );
     }
 
-    //createMarkup(data.hits);
     addMarkup(data.hits);
     loadMoreBtn.show();
     if (currentPage === 1) {
       Notify.success(`Hooray! We found ${newsApiService.hits} images.`);
     }
+    lightbox.refresh();
   });
 }
 
