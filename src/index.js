@@ -38,12 +38,10 @@ function onSearch(e) {
   newsApiService.resetPage();
   clearGallery();
   fetchPosts();
-  lightbox.refresh();
 }
 
 function onLoadMore() {
   fetchPosts();
-  //lightbox.refresh();
 }
 
 function fetchPosts() {
